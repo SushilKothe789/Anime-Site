@@ -1,0 +1,200 @@
+.anime-details-page {
+  min-height: 100vh;
+  background: #0f0f0f;
+  color: white;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.anime-details-page > nav {
+  margin-bottom: 30px;
+}
+
+
+/* =========================
+   WATCH SECTION
+========================= */
+
+.watch-section {
+  padding: 0 30px;
+}
+
+.watch-header {
+  margin-bottom: 20px;
+}
+
+.watch-header h1 {
+  font-size: 32px;
+  margin: 0 0 8px;
+}
+
+.watch-header p {
+  color: #999;
+  margin: 0;
+}
+
+.watch-header strong {
+  color: white;
+}
+
+
+/* =========================
+   VIDEO PLAYER
+========================= */
+
+.player-container {
+  width: 100%;
+  height: 650px;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.player-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.no-video {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
+
+
+/* =========================
+   EPISODES
+========================= */
+
+.episodes-section {
+  padding: 35px 30px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.section-heading h2 {
+  margin: 0;
+}
+
+.section-heading span {
+  color: #888;
+  font-size: 14px;
+}
+
+.episodes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.episode-button {
+  background: #242424;
+  border: 1px solid #444;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.episode-button:hover {
+  background: #e50914;
+  border-color: #e50914;
+}
+
+.active-episode {
+  background: #e50914;
+  border-color: #e50914;
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.description-section {
+  margin: 0 30px 40px;
+  padding: 20px;
+  background: #181818;
+  border-radius: 10px;
+}
+
+.description-section p {
+  color: #aaa;
+  line-height: 1.6;
+  margin: 0 0 15px;
+}
+
+.full-details-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.full-details-btn span {
+  margin-left: 8px;
+  font-size: 18px;
+}
+
+.full-details-btn:hover {
+  color: #e50914;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.details-status {
+  min-height: 100vh;
+  background: #0f0f0f;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details-status.error {
+  color: #ef4444;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .watch-section {
+    padding: 0 15px;
+  }
+
+  .watch-header h1 {
+    font-size: 24px;
+  }
+
+  .player-container {
+    height: 300px;
+  }
+
+  .episodes-section {
+    padding: 25px 15px;
+  }
+
+  .description-section {
+    margin: 0 15px 30px;
+  }
+}
