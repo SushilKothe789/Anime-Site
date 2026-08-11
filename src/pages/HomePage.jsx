@@ -123,11 +123,12 @@ const HomePage = () => {
                                 "/placeholder.jpg";
 
                             const latestEpisode =
-                                anime.latest_episode ??
-                                anime.episode_number ??
-                                anime.episode ??
+                                anime.is_sub ||
+                                anime.alternative ||
                                 "N/A";
-
+                            const rating = 
+                                anime.score ||
+                                "N/A";
                             return (
                                 <div
                                     className="anime-card"
@@ -174,9 +175,9 @@ const HomePage = () => {
                                         </h2>
 
                                         <p>
-                                            Latest Episode:{" "}
+                                            Rating:
                                             <span>
-                                                {latestEpisode}
+                                                {rating}
                                             </span>
                                         </p>
 
