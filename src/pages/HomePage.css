@@ -212,6 +212,41 @@
   color: #ef4444;
 }
 
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.pagination button {
+  min-width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #e50914;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination .active-page {
+  background: #e50914;
+  font-weight: bold;
+}
+
+
 /* Responsive */
 
 @media (max-width: 1200px) {

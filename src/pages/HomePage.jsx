@@ -1,198 +1,267 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
 import Navbar from "../components/Navbar";
 
 const API_URL =
-    import.meta.env.VITE_API_URL ||
-    "http://localhost:4000";
+  import.meta.env.VITE_API_URL || "http://localhost:4000";
 
 const HomePage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [animeList, setAnimeList] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+  const [animeList, setAnimeList] = useState([]);
+  const [page, setPage] = useState(1);
 
-    useEffect(() => {
-        const fetchRecentAnime = async () => {
-            try {
-                setLoading(true);
-                setError("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-                const response = await fetch(
-                    `${API_URL}/api/recent-anime`
-                );
+  useEffect(() => {
+    const fetchRecentAnime = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-                if (!response.ok) {
-                    throw new Error(
-                        `Failed to fetch anime: ${response.status}`
-                    );
-                }
-
-                const data = await response.json();
-
-                console.log("Recent Anime:", data);
-
-                const animeData = Array.isArray(data)
-                    ? data
-                    : data?.data || [];
-
-                setAnimeList(animeData);
-            } catch (err) {
-                console.error("Recent anime error:", err);
-
-                setError("Failed to load recent anime");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchRecentAnime();
-    }, []);
-
-    if (loading) {
-        return (
-            <div className="home-page">
-                <Navbar />
-
-                <div className="loading">
-                    Loading latest anime...
-                </div>
-            </div>
+        const response = await fetch(
+          `${API_URL}/api/recent-anime?page=${page}&per_page=24`
         );
-    }
 
-    if (error) {
-        return (
-            <div className="home-page">
-                <Navbar />
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch anime: ${response.status}`
+          );
+        }
 
-                <div className="error">
-                    {error}
-                </div>
-            </div>
+        const data = await response.json();
+
+        console.log("Recent Anime:", data);
+
+        const animeData =
+          Array.isArray(data)
+            ? data
+            : data?.data || [];
+
+        setAnimeList(animeData);
+
+      } catch (err) {
+        console.error(
+          "Recent anime error:",
+          err
         );
-    }
 
+        setError(
+          "Failed to load recent anime"
+        );
+
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecentAnime();
+  }, [page]);
+
+
+  const changePage = (newPage) => {
+    if (newPage < 1) return;
+
+    setPage(newPage);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+
+  if (error) {
     return (
-        <div className="home-page">
+      <div className="home-page">
+        <Navbar />
 
-            <Navbar />
+        <div className="error">
+          {error}
+        </div>
+      </div>
+    );
+  }
 
-            {/* LATEST ANIME */}
-            <section className="latest-anime-section">
 
-                <div className="section-header">
-                    <h1>Latest Episodes</h1>
+  return (
+    <div className="home-page">
 
-                    <button
-                        className="view-all-btn"
-                        onClick={() => navigate("/anime")}
-                    >
-                        View All
-                    </button>
-                </div>
+      <Navbar />
 
-                {animeList.length === 0 ? (
-                    <div className="no-anime">
-                        No anime available.
-                    </div>
-                ) : (
-                    <div className="anime-grid">
+      <section className="latest-anime-section">
 
-                        {animeList.map((anime, index) => {
+        <div className="section-header">
 
-                            const animeId =
-                                anime.id ||
-                                anime._id ||
-                                anime.slug;
+          <h1>
+            Latest Episodes
+          </h1>
 
-                            const animeName =
-                                anime.title ||
-                                anime.name ||
-                                anime.anime_name ||
-                                "Unknown Anime";
-
-                            const image =
-                                anime.image ||
-                                anime.poster ||
-                                anime.cover ||
-                                anime.thumbnail ||
-                                "/placeholder.jpg";
-
-                            const latestEpisode =
-                                anime.is_sub ||
-                                anime.alternative ||
-                                "N/A";
-                            const rating = 
-                                anime.score ||
-                                "N/A";
-                            return (
-                                <div
-                                    className="anime-card"
-                                    key={animeId || index}
-                                    onClick={() => {
-                                        if (animeId) {
-                                            navigate(
-                                                `/anime/${animeId}`
-                                            );
-                                        }
-                                    }}
-                                    role="button"
-                                    tabIndex={0}
-                                    onKeyDown={(event) => {
-                                        if (
-                                            event.key === "Enter" &&
-                                            animeId
-                                        ) {
-                                            navigate(
-                                                `/anime/${animeId}`
-                                            );
-                                        }
-                                    }}
-                                >
-                                    <div className="anime-image-container">
-
-                                        <img
-                                            src={image}
-                                            alt={animeName}
-                                            className="anime-image"
-                                            loading="lazy"
-                                        />
-
-                                        <span className="episode-badge">
-                                            EP {latestEpisode}
-                                        </span>
-
-                                    </div>
-
-                                    <div className="anime-info">
-
-                                        <h2 title={animeName}>
-                                            {animeName}
-                                        </h2>
-
-                                        <p>
-                                            Rating:
-                                            <span>
-                                                {rating}
-                                            </span>
-                                        </p>
-
-                                    </div>
-                                </div>
-                            );
-                        })}
-
-                    </div>
-                )}
-
-            </section>
+          <button
+            className="view-all-btn"
+            onClick={() =>
+              navigate("/anime")
+            }
+          >
+            View All
+          </button>
 
         </div>
-    );
+
+
+        {loading ? (
+
+          <div className="loading">
+            Loading latest anime...
+          </div>
+
+        ) : animeList.length === 0 ? (
+
+          <div className="no-anime">
+            No anime available.
+          </div>
+
+        ) : (
+
+          <>
+            <div className="anime-grid">
+
+              {animeList.map(
+                (anime, index) => {
+
+                  const animeId =
+                    anime.id;
+
+                  const animeName =
+                    anime.title ||
+                    "Unknown Anime";
+
+                  const image =
+                    anime.poster ||
+                    "/placeholder.jpg";
+
+                    const latestEpisode = 
+                    anime.is_sub ||
+                    "N/A";
+                  const rating =
+                    anime.score || "N/A";
+
+                  return (
+                    <div
+                      className="anime-card"
+                      key={
+                        animeId || index
+                      }
+                      onClick={() => {
+                        if (animeId) {
+                          navigate(
+                            `/anime/${animeId}`
+                          );
+                        }
+                      }}
+                    >
+
+                      <div className="anime-image-container">
+
+                        <img
+                          src={image}
+                          alt={animeName}
+                          className="anime-image"
+                          loading={
+                            index < 6
+                              ? "eager"
+                              : "lazy"
+                          }
+                          decoding="async"
+                        />
+
+                        <span className="episode-badge">
+                            EP {latestEpisode}
+                        </span>
+
+                      </div>
+
+
+                      <div className="anime-info">
+
+                        <h2
+                          title={animeName}
+                        >
+                          {animeName}
+                        </h2>
+
+                        <p>
+                          Rating: {rating}★
+                        </p>
+
+                      </div>
+
+                    </div>
+                  );
+                }
+              )}
+
+            </div>
+
+
+            {/* PAGINATION */}
+
+            <div className="pagination">
+
+              <button
+                disabled={page === 1}
+                onClick={() =>
+                  changePage(page - 1)
+                }
+              >
+                &lt;
+              </button>
+
+
+              {page > 1 && (
+                <button
+                  onClick={() =>
+                    changePage(page - 1)
+                  }
+                >
+                  {page - 1}
+                </button>
+              )}
+
+
+              <button className="active-page">
+                {page}
+              </button>
+
+
+              <button
+                onClick={() =>
+                  changePage(page + 1)
+                }
+              >
+                {page + 1}
+              </button>
+
+
+              <button
+                onClick={() =>
+                  changePage(page + 1)
+                }
+              >
+                &gt;
+              </button>
+
+            </div>
+
+          </>
+        )}
+
+      </section>
+
+    </div>
+  );
 };
 
 export default HomePage;
