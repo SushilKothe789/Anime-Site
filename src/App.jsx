@@ -13,7 +13,6 @@ function App() {
         <Route
           path="/anime/:id"
           element={<AnimeDetails />}
-
         />
       </Routes>
       <Footer/>
