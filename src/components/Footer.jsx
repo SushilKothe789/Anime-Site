@@ -3,7 +3,7 @@ const Footer = () => {
   return (
     <div>
         <div className="logo">
-          Ani<span>Verse</span>
+          Ani<span>Knight</span>
         </div>
 
         <p>© 2026 AniVerse. All rights reserved.</p>

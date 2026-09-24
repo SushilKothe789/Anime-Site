@@ -1,0 +1,39 @@
+.search-page {
+    min-height: 100vh;
+    padding: 40px 30px;
+    background: #0f0f0f;
+    color: #ffffff;
+}
+
+.search-header {
+    margin-bottom: 30px;
+}
+
+.search-header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+.search-header p {
+    margin: 0;
+    color: #aaa;
+}
+
+.search-header strong {
+    color: #ffffff;
+}
+
+.search-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 300px;
+
+    color: #aaa;
+    font-size: 18px;
+}
+
+.search-message.error {
+    color: #ff6b6b;
+}
